@@ -12,23 +12,6 @@ import $ from 'jquery';
 export default {
   name: 'App',
   components: { NavBar },
-  setup() {
-    $.ajax({
-      url: "http://localhost:3000/user/account/register/",
-      type: "post",
-      data: {
-        username: "ppp",
-        password: "456",
-        confirmedPassword: "456"
-      },
-      success(resp) {
-        console.log(resp);
-      },
-      error(resp) {
-        console.log(resp);
-      }
-    });
-  }
 }
 </script>
 
