@@ -66,7 +66,7 @@ export default {
 
 .user-photo {
     text-align: center;
-    padding-top: 10vh;
+    padding-top: 14vh;
 }
 
 div.user-photo > img {
