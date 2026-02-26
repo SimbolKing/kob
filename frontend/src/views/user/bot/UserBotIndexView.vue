@@ -12,7 +12,7 @@
         <div class="card" style="margin-top: 20px;">
           <div class="card-header">
             <span class="float-start my-bot" style="font-size: 130%;">my bot</span>
-            <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#add-bot-btn">Create Bot</button>
+            <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#add-bot-btn">Create</button>
             <div class="modal fade" id="add-bot-btn" tabindex="-1">
               <div class="modal-dialog modal-xl">
                 <div class="modal-content">
@@ -49,8 +49,8 @@
                   </div>
                   <div class="modal-footer">
                     <div class="error-message">{{ botadd.error_message }}</div>
-                    <button type="button" class="btn btn-primary" @click="add_bot">create</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                    <button type="button" class="btn btn-primary" @click="add_bot" style="margin-right: 15px;">Done!</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                   </div>
                 </div>
               </div>
@@ -107,8 +107,8 @@
                             </div>
                             <div class="modal-footer">
                               <div class="error-message">{{ bot.error_message }}</div>
-                              <button type="button" class="btn btn-primary" @click="modify_bot(bot)">modify</button>
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                              <button type="button" class="btn btn-primary" @click="modify_bot(bot)" style="margin-right: 15px;">Modify</button>
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             </div>
                           </div>
                         </div>
@@ -252,7 +252,7 @@ export default {
 
 <style scoped>
 .options {
-  padding: 2px 7px;
+  padding: 1px 7px;
 }
 
 .my-bot {
@@ -260,7 +260,7 @@ export default {
 }
 
 .bot-info {
-  padding: 11px 15px;
+  padding: 10px 15px;
 }
 
 .error-message {

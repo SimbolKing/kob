@@ -54,6 +54,7 @@
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 import { useStore } from "vuex";
+import router from '@/router';
 
 export default {
   name: 'NavBar',
@@ -65,6 +66,7 @@ export default {
 
       const logout = () => {
           store.dispatch("logout");
+          router.push({ name: "login" });
       }
 
       return { route_name, logout }
