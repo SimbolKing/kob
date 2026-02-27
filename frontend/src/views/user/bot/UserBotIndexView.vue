@@ -40,8 +40,8 @@
                           enableBasicAutocompletion: true, //启用基本自动完成
                           enableSnippets: true, // 启用代码段
                           enableLiveAutocompletion: true, // 启用实时自动完成
-                          fontSize: 18, //设置字号
-                          tabSize: 4, // 标签大小
+                          fontSize: 13, //设置字号
+                          tabSize: 2, // 标签大小
                           showPrintMargin: false, //去除编辑器里的竖线
                           highlightActiveLine: true,
                         }" />
@@ -89,7 +89,7 @@
                               </div>
                               <div class="mb-3">
                                 <label for="add-bot-code" class="form-label">Your bot code</label>
-                                <VAceEditor v-model:value="botadd.content" 
+                                <VAceEditor v-model:value="bot.content" 
                                   @init="editorInit"
                                   lang="c_cpp"
                                   theme="textmate"
