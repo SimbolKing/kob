@@ -12,11 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 public class Player {
     private Integer id;
+    private Integer botId;  // -1表示亲自出马，否则表示用AI打
+    private String botCode;
     private Integer sx;
     private Integer sy;
     private List<Integer> steps;
 
-    private boolean check_tail_increasing(int step) {
+    private boolean check_tail_increasing(int step) {  // 检验当前回合，蛇的长度是否增加
         if (step <= 10) return true;
         return step % 3 == 1;
     }
@@ -32,12 +34,10 @@ public class Player {
             x += dx[d];
             y += dy[d];
             res.add(new Cell(x, y));
-            step ++ ;
             if (!check_tail_increasing( ++ step)) {
                 res.remove(0);
             }
         }
-
         return res;
     }
 
@@ -46,7 +46,6 @@ public class Player {
         for (int d: steps) {
             res.append(d);
         }
-
         return res.toString();
     }
 }
