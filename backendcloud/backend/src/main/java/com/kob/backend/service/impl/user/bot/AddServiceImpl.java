@@ -1,5 +1,6 @@
 package com.kob.backend.service.impl.user.bot;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kob.backend.mapper.BotMapper;
 import com.kob.backend.pojo.Bot;
 import com.kob.backend.pojo.User;
@@ -22,11 +23,10 @@ public class AddServiceImpl implements AddService {
 
     @Override
     public Map<String, String> add(Map<String, String> data) {
-
         UsernamePasswordAuthenticationToken authenticationToken =
                 (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl login = (UserDetailsImpl) authenticationToken.getPrincipal();
-        User user = login.getUser();
+        UserDetailsImpl loginUser = (UserDetailsImpl) authenticationToken.getPrincipal();
+        User user = loginUser.getUser();
 
         String title = data.get("title");
         String description = data.get("description");
@@ -35,39 +35,45 @@ public class AddServiceImpl implements AddService {
         Map<String, String> map = new HashMap<>();
 
         if (title == null || title.isEmpty()) {
-            map.put("error_message", "title cannot be empty");
+            map.put("error_message", "标题不能为空");
             return map;
         }
 
         if (title.length() > 100) {
-            map.put("error_message", "title's length must less than 100");
+            map.put("error_message", "标题长度不能大于100");
             return map;
         }
 
         if (description == null || description.isEmpty()) {
-            description = "this user didn't edit the description!";
+            description = "这个用户很懒，什么也没留下~";
         }
 
         if (description.length() > 300) {
-            map.put("error_message", "bot's length must less than 300");
+            map.put("error_message", "Bot描述的长度不能大于300");
             return map;
         }
 
         if (content == null || content.isEmpty()) {
-            map.put("error_message", "code cannot be empty");
+            map.put("error_message", "代码不能为空");
             return map;
         }
 
         if (content.length() > 10000) {
-            map.put("error_message", "code's length must less than 10000");
+            map.put("error_message", "代码长度不能超过10000");
+            return map;
+        }
+
+        QueryWrapper<Bot> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", user.getId());
+        if (botMapper.selectCount(queryWrapper) >= 6) {
+            map.put("error_message", "You can only create up to 6 bots! ");
             return map;
         }
 
         Date now = new Date();
-
         Bot bot = new Bot(null, user.getId(), title, description, content, now, now);
-        botMapper.insert(bot);
 
+        botMapper.insert(bot);
         map.put("error_message", "success");
 
         return map;

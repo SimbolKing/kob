@@ -28,7 +28,7 @@ public class WebSocketServer {
     private User user;
     private Session session = null;
 
-    private static UserMapper userMapper;
+    public static UserMapper userMapper;
     public static RecordMapper recordMapper;
     private static BotMapper botMapper;
     public static RestTemplate restTemplate;
@@ -56,7 +56,6 @@ public class WebSocketServer {
     @OnOpen
     public void onOpen(Session session, @PathParam("token") String token) throws IOException {
         this.session = session;
-        System.out.println("connected!");
         Integer userId = JwtAuthentication.getUserId(token);
         this.user = userMapper.selectById(userId);
 
@@ -65,13 +64,10 @@ public class WebSocketServer {
         } else {
             this.session.close();
         }
-
-        System.out.println(users);
     }
 
     @OnClose
     public void onClose() {
-        System.out.println("disconnected!");
         if (this.user != null) {
             users.remove(this.user.getId());
         }
@@ -125,7 +121,6 @@ public class WebSocketServer {
     }
 
     private void startMatching(Integer botId) {
-        System.out.println("start matching!");
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", this.user.getId().toString());
         data.add("rating", this.user.getRating().toString());
@@ -134,7 +129,6 @@ public class WebSocketServer {
     }
 
     private void stopMatching() {
-        System.out.println("stop matching");
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("user_id", this.user.getId().toString());
         restTemplate.postForObject(removePlayerurl, data, String.class);
@@ -152,7 +146,6 @@ public class WebSocketServer {
 
     @OnMessage
     public void onMessage(String message, Session session) {  // 当做路由
-        System.out.println("receive message!");
         JSONObject data = JSONObject.parseObject(message);
         String event = data.getString("event");
         if ("start-matching".equals(event)) {
